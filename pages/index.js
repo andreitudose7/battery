@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import Head from 'next/head'
 import { Inter } from 'next/font/google'
+import { Fireworks } from 'fireworks-js'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -18,6 +19,16 @@ export default function Home() {
       setMessages(oldMessages => ([...oldMessages, { id: new Date().getTime(), text: newMsg }]))
     }
   }
+
+  const shouldRenderFireworks = () => sessionNumber === 4 && messages.length > 3
+
+  useEffect(() => {
+    if(shouldRenderFireworks()) {
+      const container = document.querySelector('#fireworks-container')
+      const fireworks = new Fireworks(container, { traceLength: 7.95, particles: 139 })
+      fireworks.start()
+    }
+  }, [sessionNumber, messages])
 
   return (
     <>
@@ -56,6 +67,7 @@ export default function Home() {
             </div>
           </div>
         </div>
+        <div id='fireworks-container' style={{ display: shouldRenderFireworks() ? 'block' : 'none' , position: 'fixed', top:0, left: 0, right: 0, bottom: 0, zIndex: 9999 }}></div>
       </main>
     </>
   )
