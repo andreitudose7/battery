@@ -452,6 +452,9 @@ body {
  }
 }
 
+.battery_1_6,
+.battery_2_6,
+.battery_3_6,
 .battery_4_4, .battery_4_5, .battery_4_6 {
   animation: pulse 2s infinite;
 }
